@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datasets Pro</title>
+  <meta name="description" content="A premium platform for managing datasets.">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Dynamic Background -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- Navbar -->
+  <nav class="glass-panel navbar">
+    <div class="logo">
+      <span class="logo-icon">📊</span>
+      Datasets<span class="pro-tag">Pro</span>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <span id="user-greeting" class="hidden"></span>
+      <button id="logout-btn" class="btn btn-outline hidden">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    
+    <!-- Auth Section (Login/Register) -->
+    <section id="auth-section" class="glass-panel auth-container">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Login</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+
+      <div id="auth-message" class="message hidden"></div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active">
+        <h2>Welcome Back</h2>
+        <div class="input-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" required placeholder="Enter your username">
+        </div>
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required placeholder="Enter your password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form hidden">
+        <h2>Create Account</h2>
+        <div class="input-group">
+          <label for="reg-username">Username</label>
+          <input type="text" id="reg-username" required placeholder="Choose a username">
+        </div>
+        <div class="input-group">
+          <label for="reg-password">Password</label>
+          <input type="password" id="reg-password" required placeholder="Create a password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      </form>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard-section" class="hidden">
+      
+      <!-- Admin Panel -->
+      <div id="admin-panel" class="glass-panel admin-panel hidden">
+        <h3>🛡️ Admin Control Center</h3>
+        <p>Manage users across the platform.</p>
+        <div class="users-list-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <!-- User rows go here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Datasets Header -->
+      <div class="dashboard-header glass-panel">
+        <div class="dashboard-title">
+          <h2>Datasets Library</h2>
+          <p>Browse, manage, and share your datasets.</p>
+        </div>
+        <button id="add-dataset-btn" class="btn btn-primary">+ New Dataset</button>
+      </div>
+
+      <!-- Add/Edit Dataset Form Modal -->
+      <div id="dataset-modal" class="modal-overlay hidden">
+        <div class="glass-panel modal-content">
+          <div class="modal-header">
+            <h3 id="modal-title">Add Dataset</h3>
+            <button class="close-modal-btn" id="close-modal">&times;</button>
+          </div>
+          <form id="dataset-form">
+            <input type="hidden" id="dataset-id">
+            <div class="input-group">
+              <label for="dataset-title">Title</label>
+              <input type="text" id="dataset-title" required placeholder="e.g., Global Weather Data">
+            </div>
+            <div class="input-group">
+              <label for="dataset-description">Description</label>
+              <textarea id="dataset-description" required rows="3" placeholder="Describe the dataset..."></textarea>
+            </div>
+            <div class="input-group">
+              <label for="dataset-file">Upload File</label>
+              <input type="file" id="dataset-file">
+            </div>
+            <div class="input-group">
+              <label for="dataset-tags">Tags (comma separated)</label>
+              <input type="text" id="dataset-tags" placeholder="e.g., weather, global, 2023">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save Dataset</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Dataset Grid -->
+      <div id="datasets-grid" class="datasets-grid">
+        <!-- Dataset cards go here -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
