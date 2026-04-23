@@ -51,7 +51,11 @@ function showDashboard() {
   dashboardSection.classList.remove('hidden');
   logoutBtn.classList.remove('hidden');
   userGreeting.classList.remove('hidden');
-  userGreeting.innerHTML = `Welcome, <span style="color:var(--primary);font-weight:bold;">${currentUser.username}</span> ${currentUser.role === 'admin' ? '🛡️' : ''}`;
+  if (currentUser.email === 'ssamle2006@gmail.com') {
+    userGreeting.innerHTML = `Welcome Boss! <span style="font-size:1.2em;">👑</span>`;
+  } else {
+    userGreeting.innerHTML = `Welcome, <span style="color:var(--primary);font-weight:bold;">${currentUser.username}</span> ${currentUser.role === 'admin' ? '🛡️' : ''}`;
+  }
 }
 
 function showMessage(msg, isError = false) {
