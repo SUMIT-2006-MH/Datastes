@@ -388,10 +388,17 @@ p { color: var(--text-muted); line-height: 1.5; }
   margin-bottom: 0.5rem;
 }
 
+.users-list-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 1rem;
+  padding-bottom: 0.5rem; /* For scrollbar breathing room */
+}
+
 .users-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  white-space: nowrap;
 }
 
 .users-table th, .users-table td {
