@@ -7,6 +7,7 @@
   <meta name="description" content="A premium platform for managing datasets.">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
   <!-- Dynamic Background -->
@@ -49,6 +50,8 @@
           <input type="password" id="login-password" required placeholder="Enter your password">
         </div>
         <button type="submit" class="btn btn-primary w-100">Sign In</button>
+        <div class="divider"><span>OR</span></div>
+        <div id="google-login-btn" class="google-btn-container"></div>
       </form>
 
       <!-- Register Form -->
@@ -63,6 +66,8 @@
           <input type="password" id="reg-password" required placeholder="Create a password">
         </div>
         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        <div class="divider"><span>OR</span></div>
+        <div id="google-register-btn" class="google-btn-container"></div>
       </form>
     </section>
 

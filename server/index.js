@@ -7,6 +7,9 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { OAuth2Client } = require('google-auth-library');
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const User = require('./models/User');
 const Dataset = require('./models/Dataset');
@@ -114,6 +117,58 @@ app.post('/api/auth/login', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+app.get('/api/config', (req, res) => {
+  res.json({ googleClientId: process.env.GOOGLE_CLIENT_ID });
+});
+
+app.post('/api/auth/google', async (req, res) => {
+  try {
+    const { credential } = req.body;
+    
+    // Verify the Google token
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { sub, email, name } = payload;
+    
+    let user = await User.findOne({ googleId: sub });
+    if (!user) {
+      user = await User.findOne({ email });
+      if (user) {
+        user.googleId = sub;
+        await user.save();
+      } else {
+        const baseUsername = name.toLowerCase().replace(/\s+/g, '');
+        let username = baseUsername;
+        let counter = 1;
+        while (await User.findOne({ username })) {
+          username = `${baseUsername}${counter}`;
+          counter++;
+        }
+        
+        user = new User({
+          username,
+          email,
+          googleId: sub,
+          role: 'user'
+        });
+        await user.save();
+      }
+    }
+    
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'supersecretjwtkeyforprodatasets', { expiresIn: '1d' });
+    res.status(200).json({ 
+      token, 
+      user: { id: user._id, username: user.username, role: user.role, email: user.email } 
+    });
+  } catch (error) {
+    console.error('Google Auth Error:', error);
+    res.status(500).json({ message: 'Invalid Google Token', error: error.message });
   }
 });
 

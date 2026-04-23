@@ -317,5 +317,63 @@ async function deleteUser(id) {
   }
 }
 
+// Google Auth
+let googleClientId = null;
+
+async function initGoogleAuth() {
+  try {
+    const res = await fetch(`${API_URL}/config`);
+    if (res.ok) {
+      const data = await res.json();
+      googleClientId = data.googleClientId;
+      if (googleClientId && window.google) {
+        google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: handleGoogleCredentialResponse
+        });
+        
+        // Render buttons after slight delay to ensure container is ready
+        setTimeout(() => {
+          const loginBtn = document.getElementById("google-login-btn");
+          const regBtn = document.getElementById("google-register-btn");
+          if (loginBtn) {
+            google.accounts.id.renderButton(loginBtn, { theme: "filled_black", size: "large", text: "signin_with" });
+          }
+          if (regBtn) {
+            google.accounts.id.renderButton(regBtn, { theme: "filled_black", size: "large", text: "signup_with" });
+          }
+        }, 100);
+      }
+    }
+  } catch (e) {
+    console.error('Failed to init Google Auth', e);
+  }
+}
+
+async function handleGoogleCredentialResponse(response) {
+  try {
+    const res = await fetch(`${API_URL}/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ credential: response.credential })
+    });
+    const data = await res.json();
+    
+    if (!res.ok) throw new Error(data.message);
+    
+    token = data.token;
+    currentUser = data.user;
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    
+    loginForm.reset();
+    registerForm.reset();
+    init();
+  } catch (err) {
+    showMessage(err.message, true);
+  }
+}
+
 // Kickoff
+initGoogleAuth();
 init();

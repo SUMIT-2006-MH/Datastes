@@ -8,7 +8,19 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false, // Optional for Google Auth users
+  },
+  email: {
+    type: String,
+    required: false,
+    unique: true,
+    sparse: true,
+  },
+  googleId: {
+    type: String,
+    required: false,
+    unique: true,
+    sparse: true,
   },
   role: {
     type: String,
