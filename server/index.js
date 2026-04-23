@@ -32,7 +32,10 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
-const upload = multer({ storage });
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 30 * 1024 * 1024 } // 30 MB limit
+});
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/datasets-pro').then(() => {
@@ -85,14 +88,21 @@ const verifyAdmin = (req, res, next) => {
 // --- Auth Routes ---
 app.post('/api/auth/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
+    
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      return res.status(400).json({ message: 'Valid email is required' });
+    }
     if (username === 'admin') return res.status(400).json({ message: 'Cannot register as admin' });
 
-    const existingUser = await User.findOne({ username });
-    if (existingUser) return res.status(400).json({ message: 'Username already exists' });
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) return res.status(400).json({ message: 'Username already exists' });
+    
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) return res.status(400).json({ message: 'Email is already registered' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, password: hashedPassword, role: 'user' });
+    const newUser = new User({ username, email, password: hashedPassword, role: 'user' });
     await newUser.save();
     
     res.status(201).json({ message: 'User created successfully' });

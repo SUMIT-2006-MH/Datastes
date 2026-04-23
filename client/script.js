@@ -115,13 +115,19 @@ loginForm.addEventListener('submit', async (e) => {
 registerForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const username = document.getElementById('reg-username').value;
+  const email = document.getElementById('reg-email').value;
   const password = document.getElementById('reg-password').value;
+  const confirmPassword = document.getElementById('reg-confirm-password').value;
+  
+  if (password !== confirmPassword) {
+    return showMessage('Passwords do not match.', true);
+  }
   
   try {
     const res = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, email, password })
     });
     const data = await res.json();
     
