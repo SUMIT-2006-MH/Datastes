@@ -7,3 +7,9 @@ A full-stack application to manage, upload, and download datasets.
 - Dataset Uploads
 - Admin Privileges
 - Glassmorphic UI
+
+## Features
+- User Authentication
+- Dataset Uploads
+- Admin Privileges
+- Glassmorphic UI
