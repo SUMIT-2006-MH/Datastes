@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -11,8 +12,8 @@ const User = require('./models/User');
 const Dataset = require('./models/Dataset');
 
 const app = express();
-const PORT = 5000;
-const JWT_SECRET = 'supersecretjwtkeyforprodatasets'; // Use env var in production
+const PORT = process.env.PORT || 5000;
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecretjwtkeyforprodatasets'; // Use env var in production
 
 app.use(cors());
 app.use(express.json());
@@ -30,7 +31,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/datasets-pro', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/datasets-pro', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
