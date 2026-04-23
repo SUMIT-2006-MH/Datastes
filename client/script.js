@@ -119,6 +119,11 @@ registerForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('reg-password').value;
   const confirmPassword = document.getElementById('reg-confirm-password').value;
   
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return showMessage('Please enter a valid email format (e.g., user@domain.com)', true);
+  }
+  
   if (password !== confirmPassword) {
     return showMessage('Passwords do not match.', true);
   }
