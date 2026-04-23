@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
 // DOM Elements
 const authSection = document.getElementById('auth-section');
@@ -163,7 +163,7 @@ function renderDatasets(datasets) {
     const isAdmin = currentUser && currentUser.role === 'admin';
     
     // Normalize file path for Windows/Unix
-    const downloadUrl = dataset.filePath ? `http://localhost:5000/${dataset.filePath.replace(/\\/g, '/')}` : '#';
+    const downloadUrl = dataset.filePath ? `/${dataset.filePath.replace(/\\/g, '/')}` : '#';
 
     card.innerHTML = `
       <span class="size-badge">${dataset.size}</span>
