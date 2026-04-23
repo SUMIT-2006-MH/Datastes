@@ -90,8 +90,8 @@ app.post('/api/auth/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
     
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      return res.status(400).json({ message: 'Valid email is required' });
+    if (!email || !/^[^\s@]+@gmail\.com$/i.test(email)) {
+      return res.status(400).json({ message: 'Only @gmail.com email addresses are allowed' });
     }
     if (username === 'admin') return res.status(400).json({ message: 'Cannot register as admin' });
 

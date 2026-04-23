@@ -119,9 +119,9 @@ registerForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('reg-password').value;
   const confirmPassword = document.getElementById('reg-confirm-password').value;
   
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@gmail\.com$/i;
   if (!emailRegex.test(email)) {
-    return showMessage('Please enter a valid email format (e.g., user@domain.com)', true);
+    return showMessage('Only @gmail.com email addresses are allowed.', true);
   }
   
   if (password !== confirmPassword) {
