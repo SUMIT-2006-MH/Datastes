@@ -185,7 +185,7 @@ function renderDatasets(datasets) {
       <h3>${dataset.title}</h3>
       <p>${dataset.description}</p>
       <div class="tags">${tagsHtml}</div>
-      <span class="creator-info">Created by: ${dataset.creator.username}</span>
+      <span class="creator-info">👤 Uploaded by: <strong style="color: var(--primary);">${dataset.creator ? dataset.creator.username : 'Unknown'}</strong></span>
       <div class="dataset-actions">
         ${dataset.filePath ? `<a href="${downloadUrl}" class="btn btn-primary" target="_blank" download="${dataset.fileName}">Download</a>` : ''}
         ${isOwner ? `<button class="btn btn-outline edit-btn" data-id="${dataset._id}">Edit</button>` : ''}
