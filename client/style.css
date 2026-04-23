@@ -463,3 +463,24 @@ p { color: var(--text-muted); line-height: 1.5; }
   justify-content: center;
   margin-top: 1rem;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  .glass-panel, .admin-panel {
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .users-list-container {
+    max-width: 100%;
+  }
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}
