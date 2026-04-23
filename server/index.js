@@ -19,7 +19,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
-// Configure Multer for file uploads
+// Serve frontend client static files
+app.use(express.static(path.join(__dirname, '../client')));
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -245,6 +246,11 @@ app.delete('/api/users/:id', verifyToken, verifyAdmin, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
+});
+
+// Catch-all route to serve frontend for any unknown route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 app.listen(PORT, () => {
