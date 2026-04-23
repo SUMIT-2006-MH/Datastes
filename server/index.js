@@ -32,10 +32,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/datasets-pro', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/datasets-pro').then(() => {
   console.log('Connected to MongoDB');
   createHardcodedAdmin();
 }).catch(err => {
